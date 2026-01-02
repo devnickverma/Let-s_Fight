@@ -19,17 +19,19 @@ if parent_dir not in sys.path:
 from backend.camera.webcam import Webcam
 from backend.pose.pose_extractor import PoseExtractor
 from backend.utils.smoothing import PoseProcessor
+from backend.action.feature_extractor import FeatureExtractor
 
 def main():
     """
     Main function to run the application.
     """
-    print("Starting LetsFight Module Test: Normalization & Smoothing...")
+    print("Starting LetsFight Feature Extraction Test...")
 
     # Initialize Modules
     webcam = Webcam()
     pose_extractor = PoseExtractor()
     pose_processor = PoseProcessor(alpha=0.5)
+    feature_extractor = FeatureExtractor()
 
     print("Press 'q' to exit.")
 
@@ -49,15 +51,20 @@ def main():
                 # Normalize and Smooth
                 processed_landmarks = pose_processor.process(raw_landmarks.landmark)
                 
-                # Print debug info
+                # Extract Features
                 if processed_landmarks:
-                    nose = processed_landmarks[0] # Landmark 0 is Nose
-                    print(f"Smoothing applied. Nose: x={nose['x']:.2f}, y={nose['y']:.2f}, z={nose['z']:.2f}")
+                    features = feature_extractor.extract(processed_landmarks)
+                    
+                    # Print Summary
+                    # L_Elbow Angle, L_Wrist Vel | R_Elbow Angle, R_Wrist Vel
+                    print(f"L: {features['left_elbow_angle']:.0f} deg, Vel: {features['left_wrist_velocity']:.2f} | "
+                          f"R: {features['right_elbow_angle']:.0f} deg, Vel: {features['right_wrist_velocity']:.2f}")
+
             else:
                 print("No pose detected")
 
             # Display frame (optional, for visual feedback that loop is running)
-            cv2.imshow('LetsFight - Phase 3 Test', frame)
+            cv2.imshow('LetsFight - Phase 4 Test', frame)
 
             # Exit on 'q' press
             if cv2.waitKey(1) & 0xFF == ord('q'):
