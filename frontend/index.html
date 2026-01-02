@@ -1,0 +1,26 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LetsFight - Real-time Action Analysis</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; color: #fff; font-family: sans-serif; }
+        #canvas-container { width: 100vw; height: 100vh; }
+        #status { position: absolute; top: 10px; left: 10px; z-index: 10; background: rgba(0,0,0,0.5); padding: 5px; }
+    </style>
+</head>
+<body>
+    <div id="status">Status: Connecting...</div>
+    <div id="canvas-container"></div>
+
+    <!-- TODO: Import Three.js from CDN or local assets -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Project Scripts -->
+    <script src="js/skeleton.js"></script>
+    <script src="js/websocket_client.js"></script>
+    <script src="js/scene.js"></script>
+</body>
+</html>
